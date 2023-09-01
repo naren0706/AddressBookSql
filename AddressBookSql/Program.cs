@@ -8,6 +8,7 @@ namespace AddressBookSql
         {
             Operation operation = new Operation();
             operation.CreateTable();
+            operation.CreateRecords();
         }
     }
 }
