@@ -155,5 +155,38 @@ namespace AddressBookSql
                 con.Close();
             }
         }
+        public void GetAllEmployeeDetails(string state,string city)
+        {
+            Connection();
+            List<AddressBook> emplist = new List<AddressBook>();
+            SqlCommand com = new SqlCommand("GetEmployeeDetails", con);
+            com.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataTable dt = new DataTable();
+            con.Open();
+            da.Fill(dt);
+            con.Close();
+            foreach (DataRow dr in dt.Rows)
+            {
+                emplist.Add(
+                    new AddressBook
+                    {
+                        FirstName = Convert.ToString(dr["FirstName"]),
+                        LastName = Convert.ToString(dr["LastName"]),
+                        Address = Convert.ToString(dr["Address"]),
+                        City = Convert.ToString(dr["City"]),
+                        State = Convert.ToString(dr["State"]),
+                        Zip = Convert.ToString(dr["Zip"]),
+                        PhoneNumber = Convert.ToString(dr["PhoneNumber"]),
+                        Email = Convert.ToString(dr["Email"]),
+                        
+                    }
+                    );
+            }
+            foreach (var data in emplist)
+            {
+                Console.WriteLine(data.FirstName + " " + data.LastName + " " + data.Address + " " + data.City + " " + data.State + " " + data.Zip + " " + data.PhoneNumber + " " + data.Email + " ");
+            }
+        }
     }
 }
