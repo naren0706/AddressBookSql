@@ -23,7 +23,8 @@ namespace AddressBookSql
             operation.UpdateDetails(book);
             operation.DeleteContact("name2");
             operation.GetByCityNState(book.City,book.State);
-
+            operation.GroupByCity();
+            operation.GroupByState();
         }
 
     }
