@@ -106,5 +106,33 @@ namespace AddressBookSql
                 con.Close();
             }
         }
+        public void UpdateDetails(AddressBook contact)
+        {
+            try
+            {
+                Connection();
+                SqlCommand com = new SqlCommand("EditContactDetails", con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@FirstName", contact.FirstName);
+                com.Parameters.AddWithValue("@LastName", contact.LastName);
+                com.Parameters.AddWithValue("@Address", contact.Address);
+                com.Parameters.AddWithValue("@City", contact.City);
+                com.Parameters.AddWithValue("@State", contact.State);
+                com.Parameters.AddWithValue("@Zip", contact.Zip);
+                com.Parameters.AddWithValue("@Phonenumber", contact.PhoneNumber);
+                com.Parameters.AddWithValue("@Email", contact.Email);
+                con.Open();
+                int i = com.ExecuteNonQuery();
+                Console.WriteLine("DataBase Updated");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
     }
 }
