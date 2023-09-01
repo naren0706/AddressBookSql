@@ -155,11 +155,11 @@ namespace AddressBookSql
                 con.Close();
             }
         }
-        public void GetAllEmployeeDetails(string state,string city)
+        public void GetByCityNState(string state,string city)
         {
             Connection();
             List<AddressBook> emplist = new List<AddressBook>();
-            SqlCommand com = new SqlCommand("GetEmployeeDetails", con);
+            SqlCommand com = new SqlCommand("GetValuesUsingCityAndState", con);
             com.CommandType = CommandType.StoredProcedure;
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataTable dt = new DataTable();
@@ -186,6 +186,41 @@ namespace AddressBookSql
             foreach (var data in emplist)
             {
                 Console.WriteLine(data.FirstName + " " + data.LastName + " " + data.Address + " " + data.City + " " + data.State + " " + data.Zip + " " + data.PhoneNumber + " " + data.Email + " ");
+            }
+        }
+
+        internal void GroupByState()
+        {
+            Connection();
+            SqlCommand com = new SqlCommand("GroupByState", con);
+            com.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataTable dt = new DataTable();
+            con.Open();
+            da.Fill(dt);
+            con.Close();
+            foreach (DataRow dr in dt.Rows)
+            {
+                Console.Write("values for " + Convert.ToString(dr["State"]) + " is");
+                Console.WriteLine(" Count : " + Convert.ToString(dr["count"]));
+            }
+        }
+        internal void GroupByCity()
+        {
+            Connection();
+
+            SqlCommand com = new SqlCommand("GroupByCity", con);
+
+            com.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataTable dt = new DataTable();
+            con.Open();
+            da.Fill(dt);
+            con.Close();
+            foreach (DataRow dr in dt.Rows)
+            {
+                Console.Write("values for " + Convert.ToString(dr["City"]) + " is");
+                Console.WriteLine(" Count : " + Convert.ToString(dr["count"]));
             }
         }
     }
