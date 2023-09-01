@@ -134,5 +134,26 @@ namespace AddressBookSql
                 con.Close();
             }
         }
+        public void DeleteContact(string firstName)
+        {
+            try
+            {
+                Connection();
+                SqlCommand com = new SqlCommand("DeleteContactDetails", con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@firstName", firstName);
+                con.Open();
+                int i = com.ExecuteNonQuery();
+                Console.WriteLine("Database Deleted");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
     }
 }

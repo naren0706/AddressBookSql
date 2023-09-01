@@ -21,6 +21,7 @@ namespace AddressBookSql
                 Email = "azasf@gmail.com"
             };
             operation.UpdateDetails(book);
+            operation.DeleteContact("name2");
         }
     }
 }
