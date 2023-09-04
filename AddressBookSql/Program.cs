@@ -28,9 +28,8 @@ namespace AddressBookSql
             //operation.CreateTableForType();
             //operation.CreateMappingTable();
             //operation.createMappingValues();
-            operation.GetTypeCount();
-
+            //operation.GetTypeCount();
+            operation.AddFriendAndFamily();
         }
-
     }
 }

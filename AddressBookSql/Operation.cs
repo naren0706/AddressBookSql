@@ -346,5 +346,11 @@ namespace AddressBookSql
                 Console.WriteLine(" Count : " + Convert.ToString(dr["count"]));
             }
         }
+
+        internal void AddFriendAndFamily()
+        {
+            AddMappingValue(1, 1);
+            AddMappingValue(3,2);
+        }
     }
 }
