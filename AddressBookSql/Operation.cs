@@ -329,5 +329,22 @@ namespace AddressBookSql
                 AddMappingValue(contactId, typeId[R.Next(0, 4)]);
             }
         }
+
+        internal void GetTypeCount()
+        {
+            Connection();
+            SqlCommand com = new SqlCommand("CountByType", con);
+            com.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataTable dt = new DataTable();
+            con.Open();
+            da.Fill(dt);
+            con.Close();
+            foreach (DataRow dr in dt.Rows)
+            {
+                Console.Write("values for " + Convert.ToString(dr["Typeid"]) + " is");
+                Console.WriteLine(" Count : " + Convert.ToString(dr["count"]));
+            }
+        }
     }
 }

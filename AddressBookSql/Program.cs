@@ -26,8 +26,9 @@ namespace AddressBookSql
             //operation.GroupByCity();
             //operation.GroupByState();
             //operation.CreateTableForType();
-            operation.CreateMappingTable();
-            operation.createMappingValues();
+            //operation.CreateMappingTable();
+            //operation.createMappingValues();
+            operation.GetTypeCount();
 
         }
 
