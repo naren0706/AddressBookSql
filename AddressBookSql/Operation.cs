@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace AddressBookSql
@@ -161,6 +162,8 @@ namespace AddressBookSql
             List<AddressBook> emplist = new List<AddressBook>();
             SqlCommand com = new SqlCommand("GetValuesUsingCityAndState", con);
             com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@state", state);
+            com.Parameters.AddWithValue("@city", city);
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataTable dt = new DataTable();
             con.Open();
@@ -172,14 +175,13 @@ namespace AddressBookSql
                     new AddressBook
                     {
                         FirstName = Convert.ToString(dr["FirstName"]),
-                        LastName = Convert.ToString(dr["LastName"]),
+                        LastName = Convert.ToString(dr["LastNames"]),
                         Address = Convert.ToString(dr["Address"]),
                         City = Convert.ToString(dr["City"]),
                         State = Convert.ToString(dr["State"]),
                         Zip = Convert.ToString(dr["Zip"]),
                         PhoneNumber = Convert.ToString(dr["PhoneNumber"]),
-                        Email = Convert.ToString(dr["Email"]),
-                        
+                        Email = Convert.ToString(dr["Email"])                        
                     }
                     );
             }
@@ -252,6 +254,79 @@ namespace AddressBookSql
             foreach (var data in emplist)
             {
                 Console.WriteLine(data.FirstName + " " + data.LastName + " " + data.Address + " " + data.City + " " + data.State + " " + data.Zip + " " + data.PhoneNumber + " " + data.Email + " ");
+            }
+        }
+
+        internal void CreateTableForType()
+        {
+            try
+            {
+                Connection();
+                string query = "create Table TypeTable(TypeId int primary key identity(1,1),Type varchar(max));";
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("Table Created Sucessfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Table is not created ");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        internal void CreateMappingTable()
+        {
+            try
+            {
+                Connection();
+                string query = "create Table MappingTable(id int primary key identity(1,1),ContactId int foreign key References address_book(id),TypeId int foreign key References TypeTable(TypeId));";
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("Table Created Sucessfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Table is not created ");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        internal void AddMappingValue(int contactId,int typeId)
+        {
+            try
+            {
+                Connection();
+                SqlCommand com = new SqlCommand("AddMappingValues", con);
+                com.CommandType = CommandType.StoredProcedure;
+                com.Parameters.AddWithValue("@Contactid", contactId);
+                com.Parameters.AddWithValue("@Typeid", typeId);
+                con.Open();
+                var i = com.ExecuteScalar();
+                Console.WriteLine("Database Added");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+        internal void createMappingValues()
+        {
+            int[] typeId = { 1,2,3,4 };
+            for(int contactId = 1 ; contactId < 100; contactId++)
+            {
+                AddMappingValue(contactId, typeId[R.Next(0, 4)]);
             }
         }
     }

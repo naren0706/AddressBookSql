@@ -7,24 +7,28 @@ namespace AddressBookSql
         public static void Main(string[] args)
         {
             Operation operation = new Operation();
-            operation.CreateTable();
-            operation.CreateRecords();
-            AddressBook book = new AddressBook()
-            {
-                FirstName = "name2",
-                LastName = "name2",
-                Address = "street2",
-                City = "UpdatedCity",
-                State = "UpdatedState",
-                Zip = "666666",
-                PhoneNumber = "999999999",
-                Email = "azasf@gmail.com"
-            };
-            operation.UpdateDetails(book);
-            operation.DeleteContact("name2");
-            operation.GetByCityNState(book.City,book.State);
-            operation.GroupByCity();
-            operation.GroupByState();
+            //operation.CreateTable();
+            //operation.CreateRecords();
+            //AddressBook book = new AddressBook()
+            //{
+            //    FirstName = "name2",
+            //    LastName = "name2",
+            //    Address = "street2",
+            //    City = "UpdatedCity",
+            //    State = "UpdatedState",
+            //    Zip = "666666",
+            //    PhoneNumber = "999999999",
+            //    Email = "azasf@gmail.com"
+            //};
+            //operation.UpdateDetails(book);
+            //operation.DeleteContact("name2");
+            //operation.GetByCityNState("TamilNadu", "Chennai");
+            //operation.GroupByCity();
+            //operation.GroupByState();
+            //operation.CreateTableForType();
+            operation.CreateMappingTable();
+            operation.createMappingValues();
+
         }
 
     }
